@@ -9,3 +9,4 @@ console.log(`JWT_SECRET=${secret}\n`)
 console.log('This is a secure random 64-character hex string.')
 
 
+
