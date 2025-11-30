@@ -1,0 +1,50 @@
+{
+  "projects": [
+    {
+      "id": 7,
+      "category": "Restaurants",
+      "title": "Luna Restaurant",
+      "description": "An exquisite dining destination that blends contemporary design with timeless elegance. Luna Restaurant features carefully curated interiors, ambient lighting, and premium furnishings that create an unforgettable dining atmosphere.",
+      "images": [
+        "/Luna1.png",
+        "/Luna2.png",
+        "/Luna3.png"
+      ],
+      "featured": true,
+      "order": 6,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": 10,
+      "category": "Commercial",
+      "title": "RED SEA GLOBAL PROJECT",
+      "description": "HOTELS-RESTAURANTS FURNITURE. An exceptional luxury hospitality project showcasing premium furniture and interior design solutions for the Red Sea Global development. Combining elegant aesthetics with functional excellence to create unforgettable guest experiences.",
+      "images": [
+        "/Redsea1.png",
+        "/Redsea2.png"
+      ],
+      "featured": true,
+      "order": 9,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": 11,
+      "category": "Hotels",
+      "title": "HOTEL IN SHURA ISLAND (RSG)",
+      "description": "A stunning luxury hotel project on Shura Island, part of the Red Sea Global development. Featuring bespoke furniture and sophisticated interior design that reflects the natural beauty and elegance of the Red Sea region. Every detail crafted to create a world-class hospitality experience.",
+      "images": [
+        "/hotelSHURA1.png",
+        "/hotelSHURA2.png",
+        "/hotelSHURA3.png",
+        "/hotelSHURA4.png"
+      ],
+      "featured": true,
+      "order": 10,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z"
+    }
+  ],
+  "lastId": 12
+}

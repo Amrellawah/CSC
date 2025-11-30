@@ -1,0 +1,19 @@
+# Public Assets Directory
+
+Place your images and static assets here:
+
+- Logo.jpeg (already present)
+- placeholder-hero.jpg
+- placeholder-about.jpg
+- placeholder-services.jpg
+- placeholder-portfolio.jpg
+- placeholder-contact.jpg
+- placeholder-project-*.jpg (for portfolio items)
+
+Update the image paths in the respective page components to match your actual image filenames.
+
+
+
+
+
+

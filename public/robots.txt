@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.creativesparking.com/sitemap.xml
+
+# Disallow admin area
+User-agent: *
+Disallow: /admin/
+
+
