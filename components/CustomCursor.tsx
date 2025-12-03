@@ -10,6 +10,7 @@ const messages = [
 ]
 
 export default function CustomCursor() {
+  const [isDesktop, setIsDesktop] = useState(false)
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0)
   const [isHovering, setIsHovering] = useState(false)
 
@@ -25,6 +26,30 @@ export default function CustomCursor() {
   const messageYSpring = useSpring(messageY, springConfig)
 
   useEffect(() => {
+    // Check if device is desktop (has mouse and is not a touch device)
+    const checkIsDesktop = () => {
+      const hasMouse = window.matchMedia('(pointer: fine)').matches
+      const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+      const isLargeScreen = window.innerWidth >= 1024
+      return hasMouse && !hasTouch && isLargeScreen
+    }
+
+    const desktopStatus = checkIsDesktop()
+    setIsDesktop(desktopStatus)
+
+    const handleResize = () => {
+      setIsDesktop(checkIsDesktop())
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    // Only set up cursor functionality on desktop
+    if (!desktopStatus) {
+      return () => {
+        window.removeEventListener('resize', handleResize)
+      }
+    }
+
     const moveCursor = (e: MouseEvent) => {
       cursorX.set(e.clientX - 16)
       cursorY.set(e.clientY - 16)
@@ -66,12 +91,18 @@ export default function CustomCursor() {
     document.addEventListener('mouseout', handleMouseOut)
 
     return () => {
+      window.removeEventListener('resize', handleResize)
       window.removeEventListener('mousemove', handleMouseMove)
       document.removeEventListener('mouseover', handleMouseOver)
       document.removeEventListener('mouseout', handleMouseOut)
       clearInterval(messageInterval)
     }
   }, [cursorX, cursorY, messageX, messageY])
+
+  // Don't render on mobile/tablet devices
+  if (!isDesktop) {
+    return null
+  }
 
   return (
     <>

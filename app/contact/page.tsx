@@ -1,8 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { FiMail, FiPhone, FiMapPin, FiSend, FiMessageCircle } from 'react-icons/fi'
+import { FiMail, FiPhone, FiMapPin, FiSend, FiMessageCircle, FiChevronDown } from 'react-icons/fi'
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -16,6 +16,8 @@ export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState('')
+  const [isEmailDropdownOpen, setIsEmailDropdownOpen] = useState(false)
+  const emailDropdownRef = useRef<HTMLDivElement>(null)
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -61,18 +63,17 @@ export default function Contact() {
     }
   }
 
+  const emailAddresses = [
+    { label: 'Sameh K.', email: 'sameh.k@csc-ltd.net' },
+    { label: 'Mohamed E.', email: 'mohamed.e@csc-ltd.net' },
+  ]
+
   const contactInfo = [
     {
       icon: FiPhone,
       title: 'Phone',
-      value: '+1 (234) 567-8900',
-      link: 'tel:+12345678900',
-    },
-    {
-      icon: FiMail,
-      title: 'Email',
-      value: 'info@creativesparking.com',
-      link: 'mailto:info@creativesparking.com',
+      value: '+966507563752',
+      link: 'tel:+966507563752',
     },
     {
       icon: FiMapPin,
@@ -82,27 +83,124 @@ export default function Contact() {
     },
   ]
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (emailDropdownRef.current && !emailDropdownRef.current.contains(event.target as Node)) {
+        setIsEmailDropdownOpen(false)
+      }
+    }
+
+    if (isEmailDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isEmailDropdownOpen])
+
+  const handleEmailSelect = (email: string) => {
+    window.location.href = `mailto:${email}`
+    setIsEmailDropdownOpen(false)
+  }
+
   return (
     <div className="min-h-screen pt-20 bg-luxury-cream dark:bg-luxury-darkBg transition-colors duration-300">
       {/* Hero Section */}
-      <section className="relative h-[60vh] flex items-center justify-center overflow-hidden rounded-b-[48px]">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#F5F3EF] via-[#F2E0CC] to-[#E6B88E] dark:from-[#1B0E0A] dark:via-[#3E2723] dark:to-[#B87333]">
-          <div className="absolute inset-0 opacity-20 bg-[url('/placeholder-contact.jpg')] bg-cover bg-center mix-blend-multiply dark:mix-blend-normal" />
+      <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center overflow-hidden rounded-b-[48px] mb-8">
+        {/* Background Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-luxury-beige via-luxury-lightGray to-luxury-cream dark:from-luxury-darkBg dark:via-luxury-darkSecondary dark:to-luxury-darkCard">
+          {/* Subtle Pattern Overlay */}
+          <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(184, 115, 51, 0.1) 35px, rgba(184, 115, 51, 0.1) 70px)`,
+            }} />
+          </div>
         </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-[#E6B88E]/70 via-transparent to-transparent dark:from-[#1B0E0A]/80" />
 
+        {/* Decorative Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          {/* Top Right Accent */}
+          <motion.div
+            className="absolute top-0 right-0 w-96 h-96 bg-luxury-copper/5 dark:bg-luxury-copper/10 rounded-full blur-3xl"
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.3, 0.5, 0.3],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+          {/* Bottom Left Accent */}
+          <motion.div
+            className="absolute bottom-0 left-0 w-80 h-80 bg-luxury-copper/5 dark:bg-luxury-copper/10 rounded-full blur-3xl"
+            animate={{
+              scale: [1.2, 1, 1.2],
+              opacity: [0.3, 0.5, 0.3],
+            }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        </div>
+
+        {/* Overlay Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-t from-luxury-cream/80 via-transparent to-transparent dark:from-luxury-darkBg/80" />
+
+        {/* Content */}
         <motion.div
-          className="relative z-10 text-center"
+          className="relative z-10 text-center max-w-4xl mx-auto px-6 sm:px-8 lg:px-12"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="luxury-heading text-5xl md:text-7xl font-bold mb-4 text-luxury-charcoal dark:text-luxury-darkText">
-            Get In <span className="text-luxury-copper">Touch</span>
-          </h1>
-          <p className="text-xl text-luxury-textLight dark:text-luxury-darkTextSecondary max-w-2xl mx-auto">
+          {/* Decorative Line Above Title */}
+          <motion.div
+            className="w-20 h-0.5 bg-luxury-copper mx-auto mb-8"
+            initial={{ width: 0, opacity: 0 }}
+            animate={{ width: 80, opacity: 1 }}
+            transition={{ duration: 1, delay: 0.3 }}
+          />
+
+          <motion.h1
+            className="luxury-heading text-5xl md:text-7xl lg:text-8xl font-bold mb-6 text-luxury-charcoal dark:text-luxury-darkText leading-tight"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            Get In{' '}
+            <span className="text-luxury-copper relative inline-block">
+              Touch
+              <motion.span
+                className="absolute -bottom-2 left-0 right-0 h-1 bg-luxury-copper/30"
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+              />
+            </span>
+          </motion.h1>
+
+          <motion.p
+            className="text-lg md:text-xl lg:text-2xl text-luxury-textLight dark:text-luxury-darkTextSecondary max-w-2xl mx-auto leading-relaxed font-light"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
             Let's discuss your project and bring your vision to life
-          </p>
+          </motion.p>
+
+          {/* Decorative Line Below Text */}
+          <motion.div
+            className="w-20 h-0.5 bg-luxury-copper mx-auto mt-8"
+            initial={{ width: 0, opacity: 0 }}
+            animate={{ width: 80, opacity: 1 }}
+            transition={{ duration: 1, delay: 0.6 }}
+          />
         </motion.div>
       </section>
 
@@ -281,32 +379,124 @@ export default function Contact() {
                   Contact <span className="text-luxury-copper">Information</span>
                 </h2>
                 <div className="space-y-6">
-                  {contactInfo.map((info, index) => (
-                    <motion.a
-                      key={index}
-                      href={info.link}
-                      className="flex items-start gap-4 p-6 bg-luxury-beige/60 dark:bg-luxury-darkSecondary border border-luxury-copper/20 hover:border-luxury-copper/60 transition-all duration-300 group"
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.6, delay: index * 0.1 }}
+                  {/* Phone */}
+                  <motion.a
+                    href={contactInfo[0].link}
+                    className="flex items-start gap-4 p-6 bg-luxury-beige/60 dark:bg-luxury-darkSecondary border border-luxury-copper/20 hover:border-luxury-copper/60 transition-all duration-300 group"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.1 }}
+                    whileHover={{ x: 5 }}
+                  >
+                    <div className="text-luxury-copper text-2xl group-hover:scale-110 transition-transform">
+                      <FiPhone />
+                    </div>
+                    <div>
+                      <h3 className="text-luxury-charcoal dark:text-luxury-darkText font-medium mb-1">{contactInfo[0].title}</h3>
+                      <p className="text-luxury-textLight dark:text-luxury-darkTextSecondary">{contactInfo[0].value}</p>
+                    </div>
+                  </motion.a>
+
+                  {/* Email with Dropdown */}
+                  <motion.div
+                    ref={emailDropdownRef}
+                    className="relative"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                  >
+                    <motion.button
+                      onClick={() => setIsEmailDropdownOpen(!isEmailDropdownOpen)}
+                      className={`w-full flex items-start gap-4 p-6 bg-luxury-beige/60 dark:bg-luxury-darkSecondary border transition-all duration-300 group text-left ${
+                        isEmailDropdownOpen 
+                          ? 'border-luxury-copper/60 shadow-md' 
+                          : 'border-luxury-copper/20 hover:border-luxury-copper/60'
+                      }`}
                       whileHover={{ x: 5 }}
+                      whileTap={{ scale: 0.98 }}
                     >
                       <div className="text-luxury-copper text-2xl group-hover:scale-110 transition-transform">
-                        <info.icon />
+                        <FiMail />
                       </div>
-                      <div>
-                        <h3 className="text-luxury-charcoal dark:text-luxury-darkText font-medium mb-1">{info.title}</h3>
-                        <p className="text-luxury-textLight dark:text-luxury-darkTextSecondary">{info.value}</p>
+                      <div className="flex-1">
+                        <h3 className="text-luxury-charcoal dark:text-luxury-darkText font-medium mb-1">Email</h3>
+                        <p className="text-luxury-textLight dark:text-luxury-darkTextSecondary text-sm">
+                          {isEmailDropdownOpen ? 'Select an email address' : 'Click to choose an email'}
+                        </p>
                       </div>
-                    </motion.a>
-                  ))}
+                      <motion.div
+                        animate={{ rotate: isEmailDropdownOpen ? 180 : 0 }}
+                        transition={{ duration: 0.3, ease: 'easeInOut' }}
+                      >
+                        <FiChevronDown className="text-luxury-copper text-xl" />
+                      </motion.div>
+                    </motion.button>
+
+                    {isEmailDropdownOpen && (
+                      <>
+                        {/* Dropdown menu */}
+                        <motion.div
+                          initial={{ opacity: 0, y: -10, scale: 0.98 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: -10, scale: 0.98 }}
+                          transition={{ duration: 0.2, ease: 'easeOut' }}
+                          className="absolute top-full left-0 right-0 mt-2 bg-luxury-beige dark:bg-luxury-darkSecondary border border-luxury-copper/30 rounded-sm shadow-xl z-10 overflow-hidden"
+                        >
+                          {emailAddresses.map((emailOption, index) => (
+                            <motion.button
+                              key={index}
+                              onClick={() => handleEmailSelect(emailOption.email)}
+                              className="w-full flex items-center gap-4 p-5 hover:bg-luxury-copper/10 dark:hover:bg-luxury-copper/20 transition-all duration-200 text-left group/item border-b border-luxury-copper/10 last:border-b-0"
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: index * 0.05 }}
+                              whileHover={{ x: 4, backgroundColor: 'rgba(184, 115, 51, 0.1)' }}
+                              whileTap={{ scale: 0.98 }}
+                            >
+                              <div className="text-luxury-copper group-hover/item:scale-110 transition-transform">
+                                <FiMail size={18} />
+                              </div>
+                              <div className="flex-1">
+                                <p className="text-luxury-charcoal dark:text-luxury-darkText font-medium mb-0.5">
+                                  {emailOption.label}
+                                </p>
+                                <p className="text-luxury-textLight dark:text-luxury-darkTextSecondary text-sm">
+                                  {emailOption.email}
+                                </p>
+                              </div>
+                            </motion.button>
+                          ))}
+                        </motion.div>
+                      </>
+                    )}
+                  </motion.div>
+
+                  {/* Address */}
+                  <motion.a
+                    href={contactInfo[1].link}
+                    className="flex items-start gap-4 p-6 bg-luxury-beige/60 dark:bg-luxury-darkSecondary border border-luxury-copper/20 hover:border-luxury-copper/60 transition-all duration-300 group"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.3 }}
+                    whileHover={{ x: 5 }}
+                  >
+                    <div className="text-luxury-copper text-2xl group-hover:scale-110 transition-transform">
+                      <FiMapPin />
+                    </div>
+                    <div>
+                      <h3 className="text-luxury-charcoal dark:text-luxury-darkText font-medium mb-1">{contactInfo[1].title}</h3>
+                      <p className="text-luxury-textLight dark:text-luxury-darkTextSecondary">{contactInfo[1].value}</p>
+                    </div>
+                  </motion.a>
                 </div>
               </div>
 
               {/* WhatsApp Button */}
               <motion.a
-                href="https://wa.me/1234567890"
+                href="https://wa.me/966507563752"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-3 p-6 bg-[#25D366] hover:bg-[#20BA5A] text-white font-medium uppercase tracking-wider transition-colors duration-300"

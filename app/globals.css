@@ -24,8 +24,14 @@ body {
   background: linear-gradient(135deg, #F5F3EF 0%, #F4E6D8 45%, #F0D8C5 100%);
   color: #2C2C2C;
   overflow-x: hidden;
-  cursor: none;
   transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Hide default cursor only on desktop devices */
+@media (pointer: fine) and (min-width: 1024px) {
+  body {
+    cursor: none;
+  }
 }
 
 .dark body {

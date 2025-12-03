@@ -64,24 +64,99 @@ export default function Portfolio() {
   return (
     <div className="min-h-screen pt-20">
       {/* Hero Section */}
-      <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-luxury-beige via-luxury-lightGray to-luxury-beige dark:from-[#1B0E0A] dark:via-[#3E2723] dark:to-[#B87333]">
-          <div className="absolute inset-0 opacity-20 bg-[url('/placeholder-portfolio.jpg')] bg-cover bg-center" />
+      <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center overflow-hidden">
+        {/* Background Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-luxury-beige via-luxury-lightGray to-luxury-cream dark:from-luxury-darkBg dark:via-luxury-darkSecondary dark:to-luxury-darkCard">
+          {/* Subtle Pattern Overlay */}
+          <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(184, 115, 51, 0.1) 35px, rgba(184, 115, 51, 0.1) 70px)`,
+            }} />
+          </div>
         </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-luxury-beige via-transparent to-transparent dark:from-[#1B0E0A]/80 dark:via-transparent dark:to-transparent" />
 
+        {/* Decorative Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          {/* Top Right Accent */}
+          <motion.div
+            className="absolute top-0 right-0 w-96 h-96 bg-luxury-copper/5 dark:bg-luxury-copper/10 rounded-full blur-3xl"
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.3, 0.5, 0.3],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+          {/* Bottom Left Accent */}
+          <motion.div
+            className="absolute bottom-0 left-0 w-80 h-80 bg-luxury-copper/5 dark:bg-luxury-copper/10 rounded-full blur-3xl"
+            animate={{
+              scale: [1.2, 1, 1.2],
+              opacity: [0.3, 0.5, 0.3],
+            }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        </div>
+
+        {/* Overlay Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-t from-luxury-cream/80 via-transparent to-transparent dark:from-luxury-darkBg/80" />
+
+        {/* Content */}
         <motion.div
-          className="relative z-10 text-center"
+          className="relative z-10 text-center max-w-4xl mx-auto px-6 sm:px-8 lg:px-12"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="luxury-heading text-5xl md:text-7xl font-bold mb-4 text-luxury-charcoal dark:text-luxury-darkText">
-            Our <span className="text-luxury-copper">Portfolio</span>
-          </h1>
-          <p className="text-xl text-luxury-textLight dark:text-luxury-darkTextSecondary max-w-2xl mx-auto">
+          {/* Decorative Line Above Title */}
+          <motion.div
+            className="w-20 h-0.5 bg-luxury-copper mx-auto mb-8"
+            initial={{ width: 0, opacity: 0 }}
+            animate={{ width: 80, opacity: 1 }}
+            transition={{ duration: 1, delay: 0.3 }}
+          />
+
+          <motion.h1
+            className="luxury-heading text-5xl md:text-7xl lg:text-8xl font-bold mb-6 text-luxury-charcoal dark:text-luxury-darkText leading-tight"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            Our{' '}
+            <span className="text-luxury-copper relative inline-block">
+              Portfolio
+              <motion.span
+                className="absolute -bottom-2 left-0 right-0 h-1 bg-luxury-copper/30"
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+              />
+            </span>
+          </motion.h1>
+
+          <motion.p
+            className="text-lg md:text-xl lg:text-2xl text-luxury-textLight dark:text-luxury-darkTextSecondary max-w-2xl mx-auto leading-relaxed font-light"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
             Showcasing our finest work in luxury interior design and furniture
-          </p>
+          </motion.p>
+
+          {/* Decorative Line Below Text */}
+          <motion.div
+            className="w-20 h-0.5 bg-luxury-copper mx-auto mt-8"
+            initial={{ width: 0, opacity: 0 }}
+            animate={{ width: 80, opacity: 1 }}
+            transition={{ duration: 1, delay: 0.6 }}
+          />
         </motion.div>
       </section>
 
